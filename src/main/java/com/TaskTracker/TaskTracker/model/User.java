@@ -23,6 +23,4 @@ public class User {
     @Getter
     @Setter
     private String email;
-
-    // Другие поля и методы
 }

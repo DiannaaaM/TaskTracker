@@ -9,5 +9,5 @@ public interface TaskWithoutDDLRepository extends JpaRepository<TaskWithoutDDL, 
     TaskWithoutDDL save(TaskWithoutDDL task);
     TaskWithoutDDL findByName(String name);
     TaskWithoutDDL deleteByName(String name);
-//    List<TaskWithoutDDL> findAll();
+    List<TaskWithoutDDL> findAll();
 }

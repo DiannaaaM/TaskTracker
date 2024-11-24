@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/taskWithoutDDL")
 public class TaskWithoutDDLController {
@@ -25,10 +27,10 @@ public class TaskWithoutDDLController {
         return ResponseEntity.ok(task);
     }
 
-//    @GetMapping("/findTasks")
-//    public ResponseEntity<List<TaskWithDDL>> findTasks() {
-//        return ResponseEntity.ok(taskWithoutDDLService.findAll());
-//    }
+    @GetMapping("/findTasks")
+    public ResponseEntity<List<TaskWithoutDDL>> findTasks() {
+        return ResponseEntity.ok(taskWithoutDDLService.findAll());
+    }
 
     @DeleteMapping("/deleteTask/{name}")
     public ResponseEntity<Void> deleteTask(@PathVariable String name) {

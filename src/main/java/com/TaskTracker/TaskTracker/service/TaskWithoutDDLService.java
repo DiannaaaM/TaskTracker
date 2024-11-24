@@ -39,13 +39,13 @@ public class TaskWithoutDDLService {
         }
     }
 
-//    public List<TaskWithoutDDL> findAll() {
-//        try {
-//            return taskWithoutDDLRepository.findAll();
-//        } catch (DataAccessException e) {
-//            throw new RuntimeException("Error finding all tasks", e);
-//        }
-//    }
+    public List<TaskWithoutDDL> findAll() {
+        try {
+            return taskWithoutDDLRepository.findAll();
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Error finding all tasks", e);
+        }
+    }
 
     public void deleteTaskByName(String name) {
         try {
