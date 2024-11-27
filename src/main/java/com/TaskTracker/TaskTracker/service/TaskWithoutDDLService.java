@@ -27,7 +27,7 @@ public class TaskWithoutDDLService {
         task.setDescription(taskWithoutDDL.getDescription());
         task.setCategory(taskWithoutDDL.getCategory());
         task.setStatus(taskWithoutDDL.getStatus());
-        task.setDateToDo(new Date());
+        task.setDateToDo(taskWithoutDDL.getDateToDo());
         return taskWithoutDDLRepository.save(task);
     }
 

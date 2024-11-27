@@ -28,7 +28,6 @@ public class TaskWithDDLService {
         task.setEndDate(taskWithDDL.getEndDate());
         task.setStartTime(taskWithDDL.getStartTime());
         task.setEndTime(taskWithDDL.getEndTime());
-        task.setCreatedDate(new Date());
         return taskWithDDLRepository.save(task);
     }
     public TaskWithDDL findByName(String name) {
