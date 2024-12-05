@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список категорий</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .category-list {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .category-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .category-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Список категорий</h1>
+<div class="category-list" id="category-list">
+    <p>Загрузка категорий...</p>
+</div>
+
+<script>
+    const apiUrl = 'http://localhost:8080/api/categories';
+
+    // Функция для получения категорий
+    async function fetchCategories() {
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error(`Ошибка: ${response.statusText}`);
+            const categories = await response.json();
+            displayCategories(categories);
+        } catch (error) {
+            document.getElementById('category-list').innerHTML = `<p style="color: red;">Не удалось загрузить категории: ${error.message}</p>`;
+        }
+    }
+
+    // Функция для отображения категорий на странице
+    function displayCategories(categories) {
+        const categoryList = document.getElementById('category-list');
+        categoryList.innerHTML = ''; // Очищаем контейнер
+
+        if (categories.length === 0) {
+            categoryList.innerHTML = '<p>Категории отсутствуют.</p>';
+            return;
+        }
+
+        categories.forEach(category => {
+            const div = document.createElement('div');
+            div.classList.add('category-item');
+            div.innerHTML = `
+                    <strong>Название:</strong> ${category.name}<br>
+                    <strong>Описание:</strong> ${category.description || 'Описание отсутствует'}
+                `;
+            categoryList.appendChild(div);
+        });
+    }
+
+    fetchCategories();
+</script>
+</body>
+</html>

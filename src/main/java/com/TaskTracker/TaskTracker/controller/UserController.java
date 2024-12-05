@@ -15,12 +15,30 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/registration")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok().body( userService.createUser(user) );
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        try {
+            if (user == null || user.getUsername() == null || user.getPassword() == null) {
+                return ResponseEntity.badRequest().body("Имя пользователя и пароль не могут быть пустыми");
+            }
+            User createdUser = userService.createUser(user);
+            return ResponseEntity.ok("Пользователь успешно зарегистрирован: " + createdUser.getUsername());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Ошибка при создании пользователя: " + e.getMessage());
+        }
     }
 
+
     @GetMapping("/login")
-    public User login(@RequestParam String username, @RequestParam String password) throws BadRequestException {
-        return userService.verifyUser( username, password );
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+        try {
+            if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                return ResponseEntity.badRequest().body("Имя пользователя и пароль не могут быть пустыми");
+            }
+            User user = userService.verifyUser(username, password);
+            return ResponseEntity.ok("Добро пожаловать, " + user.getUsername());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(500).body("Ошибка при входе: " + e.getMessage());
+        }
     }
+
 }

@@ -1,6 +1,9 @@
-CREATE TABLE users(
-    id SERIAL UNIQUE PRIMARY KEY ,
-    email TEXT NOT NULL,
-    name TEXT NOT NULL,
-    password TEXT not null
-);
+-- DROP TABLE IF EXISTS users;
+--
+-- CREATE TABLE users (
+--                        id SERIAL PRIMARY KEY,
+--                        username VARCHAR(255) NOT NULL,
+--                        password VARCHAR(255) NOT NULL,
+--                        email VARCHAR(255) UNIQUE
+-- );
+ALTER TABLE categories DROP COLUMN colour;

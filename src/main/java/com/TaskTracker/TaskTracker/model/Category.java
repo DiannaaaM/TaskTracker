@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,13 @@ public class Category {
 
     @Getter
     @Setter
-    private String colour;
+    private String color;
 
     public Category() {}
 
     public Category(String name, String description, String colour) {
         this.name = name;
         this.description = description;
-        this.colour = colour;
+        this.color = color;
     }
 }

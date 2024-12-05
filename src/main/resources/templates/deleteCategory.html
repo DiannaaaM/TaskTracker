@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Append category</title>
+    <style>
+        body, .windowToNewCategory {
+            font-family: 'Arial', "Times New Roman", Times, serif;
+        }
+        .windowToNewCategory {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .windowToNewCategory input, .windowToNewCategory button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .windowToNewCategory button {
+            background-color: #0987a3;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .windowToNewCategory button:hover {
+            background-color: #076a82;
+        }
+
+        .windowToNewCategory__color-input {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 50px;
+            height: 50px;
+            background: none;
+            transition: border 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+<div class="windowToNewCategory">
+
+    <h2>Удалить категорию</h2>
+    <form id="delete-category-form">
+        <label for="delete-name">Название категории:</label>
+        <input type="text" id="delete-name" placeholder="Введите название категории для удаления" required>
+        <button type="submit">Удалить категорию</button>
+    </form>
+</div>
+<script>
+    const apiUrl = 'http://localhost:8080/api/categories/delete';
+    // Удаление категории
+    document.getElementById('delete-category-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('delete-name').value;
+
+        const category = { name };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(category)
+            });
+
+            if (response.ok) {
+                const message = await response.text();
+                alert(message);
+                document.getElementById('delete-category-form').reset();
+            } else {
+                const errorText = await response.text();
+                alert(`Ошибка: ${errorText}`);
+            }
+        } catch (error) {
+            console.error('Ошибка при удалении категории:', error);
+            alert('Не удалось удалить категорию');
+        }
+    });
+
+</script>
+</body>
+</html>

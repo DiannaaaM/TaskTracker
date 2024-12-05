@@ -6,6 +6,8 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -14,14 +16,21 @@ public class UserService {
     private UserRepository userRepository;
 
     public User createUser(User user) {
+        Optional<User> existingUser = Optional.ofNullable( userRepository.findByUsername( user.getUsername() ) );
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("Пользователь с таким именем уже существует");
+        }
         return userRepository.save(user);
     }
-    public User verifyUser(String username, String password) throws BadRequestException {
+
+    public User verifyUser(String username, String password) {
         User user = userRepository.findByUsername(username);
+
         if (!user.getPassword().equals(password)) {
-            throw new BadRequestException("Wrong password");
-        } else {
-            return user;
+            throw new RuntimeException("Неверный пароль");
         }
+
+        return user;
     }
+
 }

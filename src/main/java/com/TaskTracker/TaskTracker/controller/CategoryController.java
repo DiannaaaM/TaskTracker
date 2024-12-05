@@ -3,19 +3,17 @@ package com.TaskTracker.TaskTracker.controller;
 import com.TaskTracker.TaskTracker.model.Category;
 import com.TaskTracker.TaskTracker.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")  // Префикс для API маршрутов
 public class CategoryController {
+
     private final CategoryService categoryService;
 
     @Autowired
@@ -29,8 +27,14 @@ public class CategoryController {
     }
 
     @PostMapping("/new_category")
-    public void createCategory(@RequestBody Category category) {
-        categoryService.addCategory(category);
+    public ResponseEntity<String> createCategory(@RequestBody Category category) {
+        try {
+            categoryService.addCategory(category);
+            return ResponseEntity.ok("Категория успешно добавлена");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ошибка при добавлении категории: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete")
